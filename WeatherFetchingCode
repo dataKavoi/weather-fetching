@@ -1,1 +1,162 @@
 
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled1.ipynb",
+      "provenance": [],
+      "collapsed_sections": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Multi-clipboard python automation project"
+      ],
+      "metadata": {
+        "id": "1XFWEczukR2G"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Weather Fetcher\n",
+        "*Working with the Weather API to test out capabilities of python in rural agriculture and small scale subsistence farming*"
+      ],
+      "metadata": {
+        "id": "SDsBil_CZ-l6"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Make libraries available for use\n",
+        "!pip install requests\n",
+        "import requests"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "I0WQMDSicbaD",
+        "outputId": "6718961d-b375-4c72-d1cb-6ae73ce32af1"
+      },
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\n",
+            "Requirement already satisfied: requests in /usr/local/lib/python3.7/dist-packages (2.23.0)\n",
+            "Requirement already satisfied: idna<3,>=2.5 in /usr/local/lib/python3.7/dist-packages (from requests) (2.10)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests) (2022.6.15)\n",
+            "Requirement already satisfied: chardet<4,>=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests) (3.0.4)\n",
+            "Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests) (1.24.3)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "API_KEY = \"11bfb21b86bc515aa80bcb99edff26ea\""
+      ],
+      "metadata": {
+        "id": "A59A95nLb1qH"
+      },
+      "execution_count": 2,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "BASE_URL = \"http://api.openweathermap.org/data/2.5/weather\""
+      ],
+      "metadata": {
+        "id": "l03PSKZlcBMf"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "city = input(\"Enter the name of a city: \")\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "KJKvOceteuCa",
+        "outputId": "4777385b-ae75-43bf-ea84-13013e904e6a"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Enter the name of a city: machakos\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#set up request url using f string with base_url and the query parameters; api_key and city then change units of measurement\n",
+        "request_url= f\"{BASE_URL}?appid={API_KEY}&q={city}&units=metric\"\n"
+      ],
+      "metadata": {
+        "id": "71VqO3dde9Ge"
+      },
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#send get request\n",
+        "response = requests.get(request_url)\n",
+        "#check status code of request\n",
+        "if response.status_code == 200:\n",
+        "  data = response.json()\n",
+        "  weather = data['weather'][0]['description']\n",
+        "  print(\"The weather is \" + weather + \".\")\n",
+        "  temperature = data[\"main\"][\"temp\"]\n",
+        "  print(\"The temps outside are \", temperature, \" degrees celcius.\")\n",
+        "else:\n",
+        "  print(\"An Error Occured\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "3ly9VJ4P3TeO",
+        "outputId": "68754b24-b5a1-4320-b483-2e11800a9f44"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "The weather is overcast clouds.\n",
+            "The temps outside are  25.49  degrees celcius.\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
